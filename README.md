@@ -1,5 +1,7 @@
 # Offline QR Code Generator
 
+[![Try it](https://img.shields.io/badge/Try%20it-Live-blue?style=for-the-badge)](https://xander-lein.github.io/qr_codes_generator/)
+
 A standalone, offline QR code generator with two modes:
 
 - **QR code from link** — generate a QR code from any link or text.
@@ -10,6 +12,10 @@ A standalone, offline QR code generator with two modes:
 Open `index.html` directly in a Chromium-based browser or Firefox. No installation, build step, server, or internet connection is required.
 
 All processing happens locally in the browser. TOTP secrets are not saved to persistent storage or sent over the network.
+
+## Live demo
+
+Try the hosted version: [xander-lein.github.io/qr_codes_generator](https://xander-lein.github.io/qr_codes_generator/).
 
 ## License
 
