@@ -6,46 +6,52 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:">
   <title>Offline QR Code Generator</title>
   <style>
-    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #172033; background: #f4f7fb; }
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; --page-bg: #101827; --text: #e7edf7; --muted: #aab7cc; --panel-bg: #182235; --border: #30405a; --input-bg: #111b2c; --input-border: #455774; --tab-selected: #263d78; --primary: #8eacff; --primary-strong: #a9beff; --secondary-bg: #28364c; --secondary-text: #e7edf7; --qr-bg: #fff; --qr-border: #71809a; --result-bg: #22355d; --error: #ff9ea8; }
+    body[data-theme="light"] { color-scheme: light; --page-bg: #f4f7fb; --text: #172033; --muted: #61708a; --panel-bg: #fff; --border: #dce3ee; --input-bg: #fff; --input-border: #cbd5e4; --tab-selected: #e9efff; --primary: #315bce; --primary-strong: #315bce; --secondary-bg: #eef2f8; --secondary-text: #34445e; --qr-bg: #fff; --qr-border: #ccd6e5; --result-bg: #f1f5ff; --error: #a52539; }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; }
+    body { margin: 0; min-height: 100vh; color: var(--text); background: var(--page-bg); transition: background-color .2s ease, color .2s ease; }
     main { width: min(760px, calc(100% - 32px)); margin: 40px auto; }
+    .topbar { align-items: center; display: flex; gap: 16px; justify-content: space-between; }
     h1 { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.3rem); }
-    .intro { margin: 0 0 24px; color: #61708a; }
-    .panel { background: #fff; border: 1px solid #dce3ee; border-radius: 18px; box-shadow: 0 12px 36px #20386412; overflow: hidden; }
-    .tabs { display: flex; border-bottom: 1px solid #e4e9f1; padding: 8px; gap: 8px; }
-    .tab { flex: 1; border: 0; border-radius: 10px; background: transparent; color: #61708a; cursor: pointer; font: inherit; font-weight: 650; padding: 12px 10px; }
-    .tab[aria-selected="true"] { background: #e9efff; color: #315bce; }
+    .intro { margin: 0 0 24px; color: var(--muted); }
+    .panel { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 18px; box-shadow: 0 12px 36px #00000024; overflow: hidden; }
+    .tabs { display: flex; border-bottom: 1px solid var(--border); padding: 8px; gap: 8px; }
+    .tab { flex: 1; border: 0; border-radius: 10px; background: transparent; color: var(--muted); cursor: pointer; font: inherit; font-weight: 650; padding: 12px 10px; }
+    .tab[aria-selected="true"] { background: var(--tab-selected); color: var(--primary-strong); }
     .content { padding: clamp(20px, 5vw, 36px); }
     .view[hidden] { display: none; }
     label { display: block; font-size: .9rem; font-weight: 650; margin: 0 0 7px; }
-    input, select { width: 100%; border: 1px solid #cbd5e4; border-radius: 9px; background: #fff; color: inherit; font: inherit; padding: 11px 12px; }
-    input:focus, select:focus, button:focus-visible { outline: 3px solid #b8caff; outline-offset: 2px; }
-    input[aria-invalid="true"] { border-color: #c63f51; }
+    input, select { width: 100%; border: 1px solid var(--input-border); border-radius: 9px; background: var(--input-bg); color: var(--text); font: inherit; padding: 11px 12px; }
+    input:focus, select:focus, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+    input[aria-invalid="true"] { border-color: var(--error); }
     .field { margin-bottom: 17px; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-    button.action { border: 0; border-radius: 9px; background: #315bce; color: white; cursor: pointer; font: inherit; font-weight: 650; padding: 11px 16px; }
-    button.secondary { background: #eef2f8; color: #34445e; }
-    .hint { color: #687790; font-size: .88rem; margin: 0; line-height: 1.4; }
+    button.action, .theme-toggle { border: 0; border-radius: 9px; background: var(--primary); color: #fff; cursor: pointer; font: inherit; font-weight: 650; padding: 11px 16px; }
+    button.secondary { background: var(--secondary-bg); color: var(--secondary-text); }
+    .theme-toggle { flex: 0 0 auto; padding: 9px 12px; }
+    .hint { color: var(--muted); font-size: .88rem; margin: 0; line-height: 1.4; }
     .uri-field { margin-top: 24px; margin-bottom: 0; }
     .uri-field .error { margin: 0; }
-    .error { color: #a52539; min-height: 1.35em; margin: 10px 0 0; }
-    .qr-box { align-items: center; background: #fbfcfe; border: 1px dashed #ccd6e5; border-radius: 14px; display: flex; justify-content: center; min-height: 240px; margin-top: 24px; padding: 18px; }
+    .error { color: var(--error); min-height: 1.35em; margin: 10px 0 0; }
+    .qr-box { align-items: center; background: var(--qr-bg); border: 1px dashed var(--qr-border); border-radius: 14px; display: flex; justify-content: center; min-height: 240px; margin-top: 24px; padding: 18px; color: #172033; }
     .qr-box canvas, .qr-box img { max-width: 100%; height: auto; }
-    .totp-result { align-items: center; background: #f1f5ff; border-radius: 12px; display: flex; justify-content: space-between; margin-top: 18px; padding: 14px 16px; }
+    .totp-result { align-items: center; background: var(--result-bg); border-radius: 12px; display: flex; justify-content: space-between; margin-top: 18px; padding: 14px 16px; }
     .totp-result[hidden] { display: none; }
     .code { font-variant-numeric: tabular-nums; font-size: 1.6rem; font-weight: 750; letter-spacing: .12em; }
-    .timer { color: #315bce; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .timer { color: var(--primary-strong); font-variant-numeric: tabular-nums; font-weight: 700; }
     .advanced { margin-top: 12px; }
-    .advanced summary { color: #315bce; cursor: pointer; font-weight: 650; }
-    footer { color: #718099; font-size: .82rem; margin-top: 16px; text-align: center; }
+    .advanced summary { color: var(--primary-strong); cursor: pointer; font-weight: 650; }
+    footer { color: var(--muted); font-size: .82rem; margin-top: 16px; text-align: center; }
     @media (max-width: 540px) { main { margin: 20px auto; } .grid { grid-template-columns: 1fr; gap: 0; } .totp-result { align-items: flex-start; flex-direction: column; gap: 5px; } }
   </style>
 </head>
 <body>
   <main>
-    <h1>Offline QR Code Generator</h1>
+    <div class="topbar">
+      <h1>Offline QR Code Generator</h1>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">Light theme</button>
+    </div>
     <p class="intro">Create QR codes locally. Nothing is uploaded or permanently stored.</p>
     <section class="panel" aria-label="QR code generator">
       <nav class="tabs" role="tablist" aria-label="QR code type">
@@ -162,7 +168,13 @@
       const uriInput = $("totp-uri"), secretInput = $("totp-secret"), labelInput = $("totp-label"), issuerInput = $("totp-issuer");
       const algorithmInput = $("totp-algorithm"), digitsInput = $("totp-digits"), periodInput = $("totp-period");
       const totpQr = $("totp-qr"), totpError = $("totp-error"), totpResult = $("totp-result"), totpCode = $("totp-code"), totpTimer = $("totp-timer");
+      const themeToggle = $("theme-toggle");
       let parsedTotp = null, timerId = null;
+      function setTheme(light) {
+        document.body.dataset.theme = light ? "light" : "dark";
+        themeToggle.setAttribute("aria-pressed", light);
+        themeToggle.textContent = light ? "Dark theme" : "Light theme";
+      }
       function renderQr(target, text, emptyText) {
         target.replaceChildren();
         if (!text) { target.append(Object.assign(document.createElement("span"), { textContent: emptyText })); return; }
@@ -202,6 +214,8 @@
         try { const now = Date.now() / 1000; const code = await generateTotp(parsedTotp.secret, now, parsedTotp.algorithm, parsedTotp.digits, parsedTotp.period); totpCode.textContent = code; totpTimer.textContent = `${parsedTotp.period - (Math.floor(now) % parsedTotp.period)}s`; } catch (error) { totpError.textContent = error.message; }
       }
       linkTab.addEventListener("click", () => selectTab("link")); totpTab.addEventListener("click", () => selectTab("totp"));
+      themeToggle.addEventListener("click", () => setTheme(document.body.dataset.theme !== "light"));
+      setTheme(false);
       linkInput.addEventListener("input", updateLink); $("link-clear").addEventListener("click", () => { linkInput.value = ""; updateLink(); });
       uriInput.addEventListener("input", updateTotp);
       [secretInput, labelInput, issuerInput, algorithmInput, digitsInput, periodInput].forEach((input) => input.addEventListener("input", () => { uriInput.value = ""; updateTotp(); }));
