@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:">
   <title>Offline QR Code Generator</title>
   <style>
-    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; --page-bg: #080d18; --text: #e7edf7; --muted: #aab7cc; --panel-bg: #111a29; --border: #2c3d58; --input-bg: #0b1320; --input-border: #405572; --tab-selected: #20386f; --primary: #8eacff; --primary-strong: #a9beff; --secondary-bg: #1c2b42; --secondary-text: #e7edf7; --qr-bg: #181818; --qr-text: #d9e2f1; --qr-border: #3b4c66; --result-bg: #1c315a; --error: #ff9ea8; }
-    body[data-theme="light"] { color-scheme: light; --page-bg: #f4f7fb; --text: #172033; --muted: #61708a; --panel-bg: #fff; --border: #dce3ee; --input-bg: #fff; --input-border: #cbd5e4; --tab-selected: #e9efff; --primary: #315bce; --primary-strong: #315bce; --secondary-bg: #eef2f8; --secondary-text: #34445e; --qr-bg: #fff; --qr-text: #172033; --qr-border: #ccd6e5; --result-bg: #f1f5ff; --error: #a52539; }
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; --page-bg: #080d18; --text: #e7edf7; --muted: #aab7cc; --panel-bg: #111a29; --border: #2c3d58; --input-bg: #0b1320; --input-border: #405572; --tab-selected: #20386f; --primary: #8eacff; --primary-strong: #a9beff; --theme-button-bg: #315bce; --secondary-bg: #1c2b42; --secondary-text: #e7edf7; --qr-bg: #181818; --qr-text: #d9e2f1; --qr-border: #3b4c66; --result-bg: #1c315a; --error: #ff9ea8; }
+    body[data-theme="light"] { color-scheme: light; --page-bg: #f4f7fb; --text: #172033; --muted: #61708a; --panel-bg: #fff; --border: #dce3ee; --input-bg: #fff; --input-border: #cbd5e4; --tab-selected: #e9efff; --primary: #315bce; --primary-strong: #315bce; --theme-button-bg: #315bce; --secondary-bg: #eef2f8; --secondary-text: #34445e; --qr-bg: #fff; --qr-text: #172033; --qr-border: #ccd6e5; --result-bg: #f1f5ff; --error: #a52539; }
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; color: var(--text); background: var(--page-bg); transition: background-color .2s ease, color .2s ease; }
     main { width: min(760px, calc(100% - 32px)); margin: 40px auto; }
@@ -29,7 +29,7 @@
     .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
     button.action, .theme-toggle { border: 0; border-radius: 9px; background: var(--primary); color: #fff; cursor: pointer; font: inherit; font-weight: 650; padding: 11px 16px; }
     button.secondary { background: var(--secondary-bg); color: var(--secondary-text); }
-    .theme-toggle { flex: 0 0 auto; padding: 9px 12px; }
+    .theme-toggle { flex: 0 0 auto; background: var(--theme-button-bg); padding: 9px 12px; }
     .hint { color: var(--muted); font-size: .88rem; margin: 0; line-height: 1.4; }
     .uri-field { margin-top: 24px; margin-bottom: 0; }
     .uri-field .error { margin: 0; }
