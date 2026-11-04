@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:">
   <title>Offline QR Code Generator</title>
   <style>
-    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; --page-bg: #101827; --text: #e7edf7; --muted: #aab7cc; --panel-bg: #182235; --border: #30405a; --input-bg: #111b2c; --input-border: #455774; --tab-selected: #263d78; --primary: #8eacff; --primary-strong: #a9beff; --secondary-bg: #28364c; --secondary-text: #e7edf7; --qr-bg: #fff; --qr-border: #71809a; --result-bg: #22355d; --error: #ff9ea8; }
-    body[data-theme="light"] { color-scheme: light; --page-bg: #f4f7fb; --text: #172033; --muted: #61708a; --panel-bg: #fff; --border: #dce3ee; --input-bg: #fff; --input-border: #cbd5e4; --tab-selected: #e9efff; --primary: #315bce; --primary-strong: #315bce; --secondary-bg: #eef2f8; --secondary-text: #34445e; --qr-bg: #fff; --qr-border: #ccd6e5; --result-bg: #f1f5ff; --error: #a52539; }
+    :root { color-scheme: dark; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; --page-bg: #080d18; --text: #e7edf7; --muted: #aab7cc; --panel-bg: #111a29; --border: #2c3d58; --input-bg: #0b1320; --input-border: #405572; --tab-selected: #20386f; --primary: #8eacff; --primary-strong: #a9beff; --secondary-bg: #1c2b42; --secondary-text: #e7edf7; --qr-bg: #181818; --qr-text: #d9e2f1; --qr-border: #3b4c66; --result-bg: #1c315a; --error: #ff9ea8; }
+    body[data-theme="light"] { color-scheme: light; --page-bg: #f4f7fb; --text: #172033; --muted: #61708a; --panel-bg: #fff; --border: #dce3ee; --input-bg: #fff; --input-border: #cbd5e4; --tab-selected: #e9efff; --primary: #315bce; --primary-strong: #315bce; --secondary-bg: #eef2f8; --secondary-text: #34445e; --qr-bg: #fff; --qr-text: #172033; --qr-border: #ccd6e5; --result-bg: #f1f5ff; --error: #a52539; }
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; color: var(--text); background: var(--page-bg); transition: background-color .2s ease, color .2s ease; }
     main { width: min(760px, calc(100% - 32px)); margin: 40px auto; }
@@ -34,7 +34,7 @@
     .uri-field { margin-top: 24px; margin-bottom: 0; }
     .uri-field .error { margin: 0; }
     .error { color: var(--error); min-height: 1.35em; margin: 10px 0 0; }
-    .qr-box { align-items: center; background: var(--qr-bg); border: 1px dashed var(--qr-border); border-radius: 14px; display: flex; justify-content: center; min-height: 240px; margin-top: 24px; padding: 18px; color: #172033; }
+    .qr-box { align-items: center; background: var(--qr-bg); border: 1px dashed var(--qr-border); border-radius: 14px; display: flex; justify-content: center; min-height: 240px; margin-top: 24px; padding: 18px; color: var(--qr-text); }
     .qr-box canvas, .qr-box img { max-width: 100%; height: auto; }
     .totp-result { align-items: center; background: var(--result-bg); border-radius: 12px; display: flex; justify-content: space-between; margin-top: 18px; padding: 14px 16px; }
     .totp-result[hidden] { display: none; }
